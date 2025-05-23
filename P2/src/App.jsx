@@ -59,7 +59,7 @@ import { useEffect, useState } from "react";
 import Persons from "./b/Persons";
 import Filter from "./b/Filter";
 import PersonsForm from "./b/PersonForm";
-import axios from "axios";
+import notesService from "./d/services/notes";
 
 const App = () => {
   const [persons, setPersons] = useState([])
@@ -67,11 +67,11 @@ const App = () => {
 
   useEffect(() => {
     console.log("effect");
-    axios
-      .get('http://localhost:3001/persons')
+      notesService
+      .getAll()
       .then(response => {
-        console.log(response)
-        setPersons(response.data)
+        console.log("getAll() data", response)
+        setPersons(response)
       })
     }, [])
 
@@ -83,7 +83,7 @@ const App = () => {
       <h2>Numbers</h2>
       <Filter filter={filter} setFilter={setFilter} />
       <br />
-      <Persons filter={filter} persons={persons} />
+      <Persons filter={filter} persons={persons} setPersons={setPersons} />
     </div>
   );
 };
