@@ -1,18 +1,18 @@
 import { useState } from "react";
 import notesService from "./../d/services/notes";
+import Notification from "../e/Notification";
 
 const PersonsForm = ({ setPersons, persons }) => {
   const [newName, setNewName] = useState("");
   const [newNumber, setNewNumber] = useState("");
+  const [message, setMessage] = useState(null);
 
   const handleNameChange = (event) => {
-    event.preventDefault();
     console.log(event.target.value);
     setNewName(event.target.value);
   };
 
   const handleNumberChange = (event) => {
-    event.preventDefault();
     console.log(event.target.value);
     setNewNumber(event.target.value);
   };
@@ -36,7 +36,7 @@ const PersonsForm = ({ setPersons, persons }) => {
         );
         setPersons(
           persons.map((person) =>
-            person.id !== personExists.id ? person : updatedPerson
+            person.id !== personExists.id ? person : response
           )
         );
         setNewName("");
@@ -45,7 +45,6 @@ const PersonsForm = ({ setPersons, persons }) => {
     } 
 
     const newPerson = {
-      id: persons.length + 1,
       name: newName,
       number: newNumber,
     };
@@ -54,14 +53,20 @@ const PersonsForm = ({ setPersons, persons }) => {
       notesService.create(newPerson).then((response) => {
         console.log(response);
         console.log("newPerson", newPerson, "is added");
-        setPersons(persons.concat(newPerson));
+        setPersons(persons.concat(response));
         setNewName("");
         setNewNumber("");
       });
     }
+    setMessage(`Added ${newName}`)
+    setTimeout(() => {
+      setMessage(null)
+    }, 3000)
   };
 
   return (
+    <>
+    <Notification message={message} type="done"/>
     <form>
       <div>
         name: <input value={newName} onChange={handleNameChange} />
@@ -75,6 +80,7 @@ const PersonsForm = ({ setPersons, persons }) => {
         </button>
       </div>
     </form>
+  </>
   );
 };
 

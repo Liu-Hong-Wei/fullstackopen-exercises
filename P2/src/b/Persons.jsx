@@ -28,6 +28,7 @@ const Persons = ({ persons, setPersons, filter }) => {
         });
     }
   };
+
   return (
     <>
       {numbersToShow &&
@@ -35,7 +36,7 @@ const Persons = ({ persons, setPersons, filter }) => {
           (
             person // Add check for persons array
           ) => (
-            <p key={person.id}>
+            <p key={person.id} className="person">
               {person.name} {person.number}
               <button onClick={() => handleDelete(person.id)}>Delete</button>
             </p>

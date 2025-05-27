@@ -55,36 +55,15 @@
 //   );
 // };
 
-import { useEffect, useState } from "react";
-import Persons from "./b/Persons";
-import Filter from "./b/Filter";
-import PersonsForm from "./b/PersonForm";
-import notesService from "./d/services/notes";
+import "./index.css";
+import Geo from "./e/Geo";
 
 const App = () => {
-  const [persons, setPersons] = useState([])
-  const [filter, setFilter] = useState("");
-
-  useEffect(() => {
-    console.log("effect");
-      notesService
-      .getAll()
-      .then(response => {
-        console.log("getAll() data", response)
-        setPersons(response)
-      })
-    }, [])
 
   return (
-    <div>
-      <h2>Phonebook</h2>
-      <h3>add a new</h3>
-      <PersonsForm persons={persons} setPersons={setPersons} />
-      <h2>Numbers</h2>
-      <Filter filter={filter} setFilter={setFilter} />
-      <br />
-      <Persons filter={filter} persons={persons} setPersons={setPersons} />
-    </div>
+    <>
+      <Geo />
+    </>
   );
 };
 
